@@ -1,0 +1,2076 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101b36">
+    <title>AdMuse — Divulgação criativa com IA</title>
+
+    <style>
+        :root {
+            --navy: #101b36;
+            --navy-light: #1c2b4c;
+            --yellow: #ffe492;
+            --yellow-hover: #ffdb6e;
+            --background: #f6f8fc;
+            --white: #ffffff;
+            --text: #19233a;
+            --muted: #667085;
+            --border: #e3e8f0;
+            --success: #18794e;
+            --danger: #b42318;
+            --radius: 18px;
+            --shadow: 0 12px 35px rgba(16, 27, 54, 0.07);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            margin: 0;
+            color: var(--text);
+            background: var(--background);
+            font-family: Inter, "Segoe UI", Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        button, input, select, textarea {
+            font: inherit;
+        }
+
+        button, a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible,
+        textarea:focus-visible,
+        a:focus-visible {
+            outline: 3px solid #6388ff;
+            outline-offset: 3px;
+        }
+
+        .container {
+            width: min(1120px, calc(100% - 40px));
+            margin: 0 auto;
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            color: var(--white);
+            background: var(--navy);
+            border-bottom: 1px solid rgba(255,255,255,.09);
+        }
+
+        .nav-inner {
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.45rem;
+            font-weight: 800;
+            letter-spacing: -.7px;
+        }
+
+        .brand-mark {
+            display: grid;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: var(--yellow);
+            color: var(--navy);
+            font-size: 1.25rem;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            color: #e4e9f3;
+            font-size: .92rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--yellow);
+        }
+
+        .language-switcher {
+            min-height: 36px;
+            max-width: 150px;
+            padding: 6px 10px;
+            color: var(--white);
+            background: var(--navy-light);
+            border: 1px solid rgba(255,255,255,.28);
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: .85rem;
+        }
+
+        .language-switcher:focus-visible {
+            outline: 3px solid var(--yellow);
+            outline-offset: 3px;
+        }
+
+        .button {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            min-height: 46px;
+            padding: 11px 20px;
+            border: 0;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 750;
+            transition: background .2s, transform .2s;
+        }
+
+        .button:hover:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        .button:disabled {
+            cursor: wait;
+            opacity: .65;
+        }
+
+        .button-primary {
+            background: var(--yellow);
+            color: var(--navy);
+        }
+
+        .button-primary:hover:not(:disabled) {
+            background: var(--yellow-hover);
+        }
+
+        .button-dark {
+            color: var(--white);
+            background: var(--navy);
+        }
+
+        .button-dark:hover:not(:disabled) {
+            background: var(--navy-light);
+        }
+
+        .button-outline {
+            color: var(--navy);
+            background: var(--white);
+            border: 1px solid var(--border);
+        }
+
+        .button-small {
+            min-height: 36px;
+            padding: 7px 12px;
+            font-size: .85rem;
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 90px 0 100px;
+            color: var(--white);
+            background:
+                radial-gradient(ellipse at 90% 15%, rgba(94, 118, 180, .24), transparent 40%),
+                var(--navy);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 12px;
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 999px;
+            color: var(--yellow);
+            font-size: .84rem;
+            font-weight: 700;
+        }
+
+        .hero h1 {
+            max-width: 680px;
+            margin: 24px 0 20px;
+            font-size: clamp(2.6rem, 5vw, 4.4rem);
+            line-height: 1.08;
+            letter-spacing: -2.5px;
+        }
+
+        .hero h1 span {
+            color: var(--yellow);
+        }
+
+        .hero-copy {
+            max-width: 580px;
+            color: #d4dbea;
+            font-size: 1.1rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .hero-note {
+            margin-top: 18px;
+            color: #b9c4d8;
+            font-size: .86rem;
+        }
+
+        .hero-card {
+            padding: 28px;
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: 22px;
+            background: rgba(255,255,255,.07);
+            box-shadow: 0 25px 70px rgba(0,0,0,.16);
+        }
+
+        .hero-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid rgba(255,255,255,.15);
+        }
+
+        .hero-card-top strong {
+            font-size: 1.05rem;
+        }
+
+        .status-pill {
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: rgba(255,228,146,.15);
+            color: var(--yellow);
+            font-size: .78rem;
+            font-weight: 700;
+        }
+
+        .preview-label {
+            margin-top: 22px;
+            color: #b9c4d8;
+            font-size: .76rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .preview-title {
+            margin: 8px 0;
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+
+        .preview-text {
+            color: #d4dbea;
+            font-size: .94rem;
+        }
+
+        .preview-tags {
+            margin-top: 18px;
+            color: var(--yellow);
+            font-size: .85rem;
+        }
+
+        .section {
+            padding: 76px 0;
+        }
+
+        .section-heading {
+            max-width: 680px;
+            margin-bottom: 32px;
+        }
+
+        .section-heading h2 {
+            margin: 0 0 12px;
+            font-size: clamp(1.9rem, 3vw, 2.7rem);
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+
+        .section-heading p {
+            margin: 0;
+            color: var(--muted);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .feature-card {
+            padding: 24px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--white);
+        }
+
+        .feature-icon {
+            display: grid;
+            place-items: center;
+            width: 46px;
+            height: 46px;
+            margin-bottom: 18px;
+            border-radius: 13px;
+            background: #fff3c9;
+            font-size: 1.4rem;
+        }
+
+        .feature-card h3 {
+            margin: 0 0 8px;
+        }
+
+        .feature-card p {
+            margin: 0;
+            color: var(--muted);
+            font-size: .94rem;
+        }
+
+        .workspace {
+            background: #edf1f8;
+        }
+
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 24px;
+            align-items: start;
+        }
+
+        .panel {
+            min-width: 0;
+            padding: 28px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .panel h3 {
+            margin: 0 0 6px;
+            font-size: 1.35rem;
+        }
+
+        .panel-description {
+            margin: 0 0 24px;
+            color: var(--muted);
+            font-size: .92rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 17px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            min-width: 0;
+        }
+
+        .field-full {
+            grid-column: 1 / -1;
+        }
+
+        .field label {
+            font-size: .9rem;
+            font-weight: 750;
+        }
+
+        .required-mark {
+            color: var(--danger);
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+            min-width: 0;
+            padding: 11px 12px;
+            color: var(--text);
+            background: var(--white);
+            border: 1px solid #cfd6e2;
+            border-radius: 9px;
+        }
+
+        .field textarea {
+            min-height: 95px;
+            resize: vertical;
+        }
+
+        .field input::placeholder,
+        .field textarea::placeholder {
+            color: #98a2b3;
+        }
+
+        .field small {
+            color: var(--muted);
+            font-size: .8rem;
+        }
+
+        .form-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .form-status {
+            margin-top: 14px;
+            padding: 11px 13px;
+            border-radius: 9px;
+            font-size: .9rem;
+            overflow-wrap: anywhere;
+        }
+
+        .form-status:empty {
+            display: none;
+        }
+
+        .status-error {
+            color: var(--danger);
+            background: #fef3f2;
+            border: 1px solid #fecdca;
+        }
+
+        .status-success {
+            color: var(--success);
+            background: #ecfdf3;
+            border: 1px solid #abefc6;
+        }
+
+        .status-info {
+            color: #344054;
+            background: #f2f4f7;
+            border: 1px solid var(--border);
+        }
+
+        .result-panel {
+            margin-top: 24px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: #fbfcff;
+        }
+
+        .result-panel[hidden] {
+            display: none;
+        }
+
+        .result-heading {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .result-heading h4 {
+            margin: 0;
+            font-size: 1.15rem;
+        }
+
+        .result-section {
+            margin-top: 18px;
+        }
+
+        .result-section h5 {
+            margin: 0 0 7px;
+            color: var(--muted);
+            font-size: .77rem;
+            text-transform: uppercase;
+            letter-spacing: .7px;
+        }
+
+        .result-section p {
+            margin: 0;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .result-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .tag {
+            padding: 5px 9px;
+            border-radius: 999px;
+            background: #fff0bd;
+            color: #54400a;
+            font-size: .83rem;
+        }
+
+        .history {
+            margin-top: 28px;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .history-header h4 {
+            margin: 0;
+        }
+
+        .history-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            background: #fff;
+        }
+
+        .history-item strong {
+            display: block;
+            overflow-wrap: anywhere;
+        }
+
+        .history-meta {
+            color: var(--muted);
+            font-size: .82rem;
+        }
+
+        .history-empty {
+            padding: 18px;
+            border: 1px dashed #cfd6e2;
+            border-radius: 10px;
+            color: var(--muted);
+            text-align: center;
+            font-size: .9rem;
+        }
+
+        .watermark-preview {
+            margin-top: 18px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #f7f8fb;
+            color: var(--muted);
+            font-size: .86rem;
+        }
+
+        .watermark-fields[hidden] {
+            display: none;
+        }
+
+        .watermark-tip {
+            margin-top: 18px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #fff8e2;
+            color: #604b12;
+            font-size: .87rem;
+        }
+
+        .footer {
+            padding: 30px 0;
+            color: #d4dbea;
+            background: var(--navy);
+        }
+
+        .footer-inner {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 12px;
+            font-size: .87rem;
+        }
+
+        .footer p {
+            margin: 0;
+        }
+
+        @media (max-width: 850px) {
+            .hero-grid,
+            .workspace-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-grid {
+                gap: 36px;
+            }
+
+            .hero {
+                padding: 66px 0 72px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .container {
+                width: min(100% - 28px, 1120px);
+            }
+
+            .nav-inner {
+                min-height: 66px;
+            }
+
+            .nav-links {
+                gap: 12px;
+                font-size: .8rem;
+            }
+
+            .nav-links a:not(.button) {
+                display: none;
+            }
+
+            .hero h1 {
+                letter-spacing: -1.4px;
+            }
+
+            .hero-card,
+            .panel {
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .field-full {
+                grid-column: auto;
+            }
+
+            .section {
+                padding: 54px 0;
+            }
+
+            .history-item {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .result-heading {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<header class="navbar">
+    <div class="container nav-inner">
+        <a class="brand" href="#" aria-label="AdMuse, início">
+            <span class="brand-mark" aria-hidden="true">✦</span>
+            <span>AdMuse</span>
+        </a>
+
+        <nav class="nav-links" aria-label="Navegação principal">
+            <select id="uiLanguage" class="language-switcher" aria-label="Idioma da interface">
+                <option value="pt-BR">Português</option>
+                <option value="en">English</option>
+                <option value="es">Español</option>
+            </select>
+            <a href="#recursos">Recursos</a>
+            <a href="#gerador">Gerador</a>
+            <a href="#marca-dagua">Marca-d'água</a>
+            <a class="button button-primary button-small" href="#gerador">Começar agora</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container hero-grid">
+            <div>
+                <span class="eyebrow">✦ Criatividade com inteligência artificial</span>
+
+                <h1>
+                    Sua arte merece
+                    <span>ser vista.</span>
+                </h1>
+
+                <p class="hero-copy">
+                    Crie textos promocionais para suas artes, produtos e serviços.
+                    Prepare sua divulgação e personalize suas imagens em um só lugar.
+                </p>
+
+                <div class="hero-actions">
+                    <a class="button button-primary" href="#gerador">Criar minha divulgação →</a>
+                    <a class="button button-outline" href="#recursos">Conhecer recursos</a>
+                </div>
+
+                <p class="hero-note">
+                    Ferramentas para artistas e pequenos negócios criativos.
+                </p>
+            </div>
+
+            <div class="hero-card" aria-label="Exemplo ilustrativo de divulgação">
+                <div class="hero-card-top">
+                    <strong>Seu próximo post</strong>
+                    <span class="status-pill">Prévia ilustrativa</span>
+                </div>
+
+                <div class="preview-label">Título</div>
+                <div class="preview-title">Arte feita para contar histórias</div>
+
+                <div class="preview-label">Texto promocional</div>
+                <p class="preview-text">
+                    Transforme suas ideias em ilustrações únicas e leve mais
+                    personalidade para seus espaços e projetos.
+                </p>
+
+                <div class="preview-label">Chamada para ação</div>
+                <p class="preview-text">Entre em contato para saber mais!</p>
+
+                <div class="preview-tags">#ArteAutoral #Ilustração #Criatividade</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="recursos">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Mais tempo para criar. Mais facilidade para divulgar.</h2>
+                <p>
+                    Recursos simples para ajudar você a apresentar seu trabalho
+                    sem precisar começar cada publicação do zero.
+                </p>
+            </div>
+
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">✍️</div>
+                    <h3>Texto com IA</h3>
+                    <p>
+                        Gere títulos, textos promocionais, chamadas para ação
+                        e hashtags a partir das informações que fornecer.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">🖼️</div>
+                    <h3>Marca-d'água</h3>
+                    <p>
+                        Adicione seu contato ou seu logotipo às imagens e baixe
+                        o resultado para usar na divulgação.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">📚</div>
+                    <h3>Histórico</h3>
+                    <p>
+                        Consulte as divulgações que foram salvas para encontrar
+                        e reutilizar seus conteúdos.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section workspace" id="gerador">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Vamos criar sua divulgação?</h2>
+                <p>
+                    Preencha as informações abaixo. Quanto mais contexto você
+                    fornecer, mais direcionado poderá ser o resultado.
+                </p>
+            </div>
+
+            <div class="workspace-grid">
+                <section class="panel">
+                    <h3>Gerador de conteúdo</h3>
+                    <p class="panel-description">
+                        Os campos marcados com * são obrigatórios.
+                    </p>
+
+                    <form id="promotionForm">
+                        <div class="form-grid">
+                            <div class="field field-full">
+                                <label for="productOrService">
+                                    Produto ou serviço <span class="required-mark">*</span>
+                                </label>
+                                <input
+                                        id="productOrService"
+                                        name="productOrService"
+                                        type="text"
+                                        maxlength="100"
+                                        placeholder="Ex.: Ilustração personalizada"
+                                        autocomplete="off"
+                                        required
+                                >
+                            </div>
+
+                            <div class="field field-full">
+                                <label for="description">
+                                    Descrição <span class="required-mark">*</span>
+                                </label>
+                                <textarea
+                                        id="description"
+                                        name="description"
+                                        maxlength="1000"
+                                        placeholder="Descreva o produto ou serviço e o que o cliente precisa saber."
+                                        required
+                                ></textarea>
+                                <small>Até 1.000 caracteres.</small>
+                            </div>
+
+                            <div class="field field-full">
+                                <label for="targetAudience">
+                                    Público-alvo <span class="required-mark">*</span>
+                                </label>
+                                <input
+                                        id="targetAudience"
+                                        name="targetAudience"
+                                        type="text"
+                                        maxlength="200"
+                                        placeholder="Ex.: Pessoas que gostam de arte autoral"
+                                        required
+                                >
+                                <small>Informe para quem você deseja divulgar.</small>
+                            </div>
+
+                            <div class="field">
+                                <label for="channel">
+                                    Canal de divulgação <span class="required-mark">*</span>
+                                </label>
+                                <select id="channel" name="channel" required>
+                                    <option value="Instagram">Instagram</option>
+                                    <option value="WhatsApp Status">Status do WhatsApp</option>
+                                    <option value="Facebook">Facebook</option>
+                                    <option value="TikTok">TikTok</option>
+                                    <option value="Outro">Outro</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="style">
+                                    Estilo do texto <span class="required-mark">*</span>
+                                </label>
+                                <select id="style" name="style" required>
+                                    <option value="professional">Profissional</option>
+                                    <option value="descontraído">Descontraído</option>
+                                    <option value="criativo">Criativo</option>
+                                    <option value="elegante">Elegante</option>
+                                    <option value="divertido">Divertido</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="language">
+                                    Idioma <span class="required-mark">*</span>
+                                </label>
+                                <select id="language" name="language" required>
+                                    <option value="pt-BR">Português (Brasil)</option>
+                                    <option value="English">Inglês</option>
+                                    <option value="Spanish">Espanhol</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="objective">
+                                    Objetivo <span class="required-mark">*</span>
+                                </label>
+                                <select id="objective" name="objective" required>
+                                    <option value="Divulgar produto ou serviço">
+                                        Divulgar meu trabalho
+                                    </option>
+                                    <option value="Atrair novos clientes">
+                                        Atrair novos clientes
+                                    </option>
+                                    <option value="Gerar vendas">Gerar vendas</option>
+                                    <option value="Aumentar engajamento">
+                                        Aumentar engajamento
+                                    </option>
+                                    <option value="Apresentar meu trabalho">
+                                        Apresentar meu portfólio
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="price">Preço (opcional)</label>
+                                <input
+                                        id="price"
+                                        name="price"
+                                        type="text"
+                                        maxlength="100"
+                                        placeholder="Ex.: A partir de R$ 50"
+                                >
+                                <small>Só será considerado se você informar.</small>
+                            </div>
+
+                            <div class="field">
+                                <label for="differentials">Diferenciais (opcional)</label>
+                                <input
+                                        id="differentials"
+                                        name="differentials"
+                                        type="text"
+                                        maxlength="500"
+                                        placeholder="Ex.: Feito sob encomenda"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="button button-dark" id="generateButton" type="submit">
+                                ✦ Gerar conteúdo
+                            </button>
+                            <button class="button button-outline" type="reset">
+                                Limpar formulário
+                            </button>
+                        </div>
+
+                        <div id="promotionStatus" class="form-status" role="status"
+                             aria-live="polite"></div>
+                    </form>
+
+                    <section class="result-panel" id="resultPanel" hidden>
+                        <div class="result-heading">
+                            <h4>Seu conteúdo gerado</h4>
+                            <button class="button button-outline button-small"
+                                    id="copyButton" type="button">
+                                Copiar tudo
+                            </button>
+                        </div>
+
+                        <div class="result-section">
+                            <h5>Título</h5>
+                            <p id="resultTitle"></p>
+                        </div>
+
+                        <div class="result-section">
+                            <h5>Texto promocional</h5>
+                            <p id="resultText"></p>
+                        </div>
+
+                        <div class="result-section" id="ctaSection">
+                            <h5>Chamada para ação</h5>
+                            <p id="resultCta"></p>
+                        </div>
+
+                        <div class="result-section" id="hashtagsSection">
+                            <h5>Hashtags</h5>
+                            <div class="result-tags" id="resultHashtags"></div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="button button-primary" id="saveButton" type="button">
+                                Salvar no histórico
+                            </button>
+                        </div>
+
+                        <div id="saveStatus" class="form-status" role="status"
+                             aria-live="polite"></div>
+                    </section>
+
+                    <section class="history">
+                        <div class="history-header">
+                            <h4>Histórico de divulgações</h4>
+                            <button class="button button-outline button-small"
+                                    id="refreshHistoryButton" type="button">
+                                Atualizar
+                            </button>
+                        </div>
+                        <div id="historyList" class="history-list">
+                            <div class="history-empty">Carregando histórico...</div>
+                        </div>
+                        <div id="historyStatus" class="form-status" role="status"
+                             aria-live="polite"></div>
+                    </section>
+                </section>
+
+                <section class="panel" id="marca-dagua">
+                    <h3>Marca-d'água nas imagens</h3>
+                    <p class="panel-description">
+                        Envie uma imagem e escolha entre inserir um texto de contato
+                        ou aplicar o seu logotipo.
+                    </p>
+
+                    <form id="watermarkForm" action="/api/watermarks"
+                          method="post" enctype="multipart/form-data">
+                        <div class="form-grid">
+                            <div class="field field-full">
+                                <label for="watermarkImage">
+                                    Imagem original <span class="required-mark">*</span>
+                                </label>
+                                <input
+                                        id="watermarkImage"
+                                        name="image"
+                                        type="file"
+                                        accept="image/png,image/jpeg"
+                                        required
+                                >
+                                <small>Formatos aceitos: PNG ou JPEG. Máximo de 5 MB.</small>
+                            </div>
+
+                            <div class="field field-full">
+                                <label for="watermarkType">
+                                    Tipo de marca-d'água
+                                </label>
+                                <select id="watermarkType" name="type" required>
+                                    <option value="TEXT">Texto de contato</option>
+                                    <option value="LOGO">Arquivo de logotipo</option>
+                                </select>
+                            </div>
+
+                            <div class="field field-full watermark-fields" id="textWatermarkFields">
+                                <label for="watermarkText">
+                                    Texto da marca-d'água
+                                </label>
+                                <input
+                                        id="watermarkText"
+                                        name="text"
+                                        type="text"
+                                        maxlength="200"
+                                        placeholder="Ex.: @minhaloja ou (71) 99999-9999"
+                                >
+                                <small>O texto será aplicado sobre a imagem.</small>
+                            </div>
+
+                            <div class="field field-full watermark-fields" id="logoWatermarkFields" hidden>
+                                <label for="watermarkLogo">
+                                    Arquivo do logotipo
+                                </label>
+                                <input
+                                        id="watermarkLogo"
+                                        name="logo"
+                                        type="file"
+                                        accept="image/png,image/jpeg"
+                                >
+                                <small>Prefira PNG com fundo transparente. Máximo de 5 MB.</small>
+                            </div>
+                        </div>
+
+                        <div class="watermark-tip">
+                            A imagem original não será alterada no seu arquivo.
+                            O resultado será baixado separadamente em PNG.
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="button button-dark" id="watermarkButton" type="submit">
+                                Aplicar marca-d'água
+                            </button>
+                        </div>
+
+                        <div id="watermarkStatus" class="form-status" role="status"
+                             aria-live="polite"></div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container footer-inner">
+        <p><strong>AdMuse</strong> — sua criatividade em destaque.</p>
+        <p>Feito para artistas e pequenos negócios criativos.</p>
+    </div>
+</footer>
+
+<script>
+    "use strict";
+
+    const UI_LANGUAGE_STORAGE_KEY = "admuse.uiLanguage";
+    const supportedUiLanguages = ["pt-BR", "en", "es"];
+    const uiLanguageSelect = document.getElementById("uiLanguage");
+
+    const translations = {
+        "pt-BR": {
+            pageTitle: "AdMuse — Divulgação criativa com IA",
+            brandAria: "AdMuse, início",
+            navAria: "Navegação principal",
+            navFeatures: "Recursos", navGenerator: "Gerador", navWatermark: "Marca-d'água", navStart: "Começar agora",
+            heroEyebrow: "✦ Criatividade com inteligência artificial",
+            heroLead: "Sua arte merece", heroAccent: "ser vista.",
+            heroCopy: "Crie textos promocionais para suas artes, produtos e serviços. Prepare sua divulgação e personalize suas imagens em um só lugar.",
+            heroCreate: "Criar minha divulgação →", heroFeatures: "Conhecer recursos",
+            heroNote: "Ferramentas para artistas e pequenos negócios criativos.",
+            previewAria: "Exemplo ilustrativo de divulgação", nextPost: "Seu próximo post", illustrativePreview: "Prévia ilustrativa",
+            previewTitleLabel: "Título", previewTitle: "Arte feita para contar histórias", previewTextLabel: "Texto promocional",
+            previewText: "Transforme suas ideias em ilustrações únicas e leve mais personalidade para seus espaços e projetos.",
+            previewCtaLabel: "Chamada para ação", previewCta: "Entre em contato para saber mais!",
+            featuresHeading: "Mais tempo para criar. Mais facilidade para divulgar.",
+            featuresCopy: "Recursos simples para ajudar você a apresentar seu trabalho sem precisar começar cada publicação do zero.",
+            featureAiTitle: "Texto com IA", featureAiCopy: "Gere títulos, textos promocionais, chamadas para ação e hashtags a partir das informações que fornecer.",
+            featureWatermarkTitle: "Marca-d'água", featureWatermarkCopy: "Adicione seu contato ou seu logotipo às imagens e baixe o resultado para usar na divulgação.",
+            featureHistoryTitle: "Histórico", featureHistoryCopy: "Consulte as divulgações que foram salvas para encontrar e reutilizar seus conteúdos.",
+            workspaceHeading: "Vamos criar sua divulgação?",
+            workspaceCopy: "Preencha as informações abaixo. Quanto mais contexto você fornecer, mais direcionado poderá ser o resultado.",
+            generatorTitle: "Gerador de conteúdo", requiredFields: "Os campos marcados com * são obrigatórios.",
+            productLabel: "Produto ou serviço", productPlaceholder: "Ex.: Ilustração personalizada",
+            descriptionLabel: "Descrição", descriptionPlaceholder: "Descreva o produto ou serviço e o que o cliente precisa saber.",
+            max1000: "Até 1.000 caracteres.", audienceLabel: "Público-alvo",
+            audiencePlaceholder: "Ex.: Pessoas que gostam de arte autoral", audienceHint: "Informe para quem você deseja divulgar.",
+            channelLabel: "Canal de divulgação", channelWhatsapp: "Status do WhatsApp", channelOther: "Outro",
+            styleLabel: "Estilo do texto", styleProfessional: "Profissional", styleCasual: "Descontraído", styleCreative: "Criativo", styleElegant: "Elegante", styleFun: "Divertido",
+            contentLanguageLabel: "Idioma do conteúdo", languagePortuguese: "Português (Brasil)", languageEnglish: "Inglês", languageSpanish: "Espanhol",
+            objectiveLabel: "Objetivo", objectivePromote: "Divulgar meu trabalho", objectiveCustomers: "Atrair novos clientes", objectiveSales: "Gerar vendas", objectiveEngagement: "Aumentar engajamento", objectivePortfolio: "Apresentar meu portfólio",
+            priceLabel: "Preço (opcional)", pricePlaceholder: "Ex.: A partir de R$ 50", priceHint: "Só será considerado se você informar.",
+            differentialsLabel: "Diferenciais (opcional)", differentialsPlaceholder: "Ex.: Feito sob encomenda",
+            generate: "✦ Gerar conteúdo", generating: "Gerando conteúdo...", reset: "Limpar formulário",
+            resultTitle: "Seu conteúdo gerado", copyAll: "Copiar tudo", titleLabel: "Título", promotionalTextLabel: "Texto promocional",
+            ctaLabel: "Chamada para ação", hashtagsLabel: "Hashtags", saveHistory: "Salvar no histórico",
+            historyTitle: "Histórico de divulgações", refresh: "Atualizar", historyLoading: "Carregando histórico...",
+            watermarkTitle: "Marca-d'água nas imagens",
+            watermarkDescription: "Envie uma imagem e escolha entre inserir um texto de contato ou aplicar o seu logotipo.",
+            originalImage: "Imagem original", acceptedFormats: "Formatos aceitos: PNG ou JPEG. Máximo de 5 MB.",
+            watermarkTypeLabel: "Tipo de marca-d'água", watermarkTextType: "Texto de contato", watermarkLogoType: "Arquivo de logotipo",
+            watermarkTextLabel: "Texto da marca-d'água", watermarkTextPlaceholder: "Ex.: @minhaloja ou (71) 99999-9999",
+            watermarkTextHint: "O texto será aplicado sobre a imagem.", logoFileLabel: "Arquivo do logotipo",
+            logoHint: "Prefira PNG com fundo transparente. Máximo de 5 MB.",
+            watermarkTip: "A imagem original não será alterada no seu arquivo. O resultado será baixado separadamente em PNG.",
+            applyWatermark: "Aplicar marca-d'água", processingImage: "Processando imagem...",
+            footerTagline: "— sua criatividade em destaque.", footerDescription: "Feito para artistas e pequenos negócios criativos.",
+            languageSelectorAria: "Idioma da interface",
+            errProduct: "Informe o nome do produto ou serviço.", errDescription: "Preencha a descrição do produto ou serviço.",
+            errAudience: "Informe o público-alvo antes de gerar o conteúdo.", errRequired: "Confira os campos de canal, estilo, idioma e objetivo.",
+            generatingStatus: "A IA está preparando sua divulgação. Aguarde...", generatedSuccess: "Conteúdo gerado com sucesso!",
+            generateFailed: "Não foi possível gerar o conteúdo. Tente novamente.", copyBefore: "Gere um conteúdo antes de copiá-lo.",
+            copied: "Conteúdo copiado para a área de transferência.", copyFailed: "Não foi possível copiar automaticamente. Selecione o texto e copie manualmente.",
+            saveBefore: "Gere um conteúdo antes de salvá-lo.", alreadySaved: "Este conteúdo já está salvo no histórico.",
+            missingId: "O servidor não retornou o identificador do conteúdo. Atualize o histórico para conferir.",
+            saved: "Conteúdo registrado no histórico.", saveFailed: "Não foi possível salvar a divulgação. Tente novamente.", dateUnavailable: "Data não disponível", untitled: "Divulgação sem título",
+            historyTypeProduct: "Produto/serviço", historyTypePromotion: "Divulgação", view: "Visualizar",
+            loadedHistory: "Conteúdo carregado do histórico.", historyUnexpected: "O servidor retornou um formato inesperado para o histórico.",
+            historyEmpty: "Nenhuma divulgação encontrada ainda.", historyFailed: "Não foi possível carregar o histórico.",
+            selectImage: "Selecione {label}.", imageFormat: "{label} deve estar no formato PNG ou JPEG.",
+            imageSize: "{label} deve ter no máximo 5 MB.", originalImageLabel: "a imagem original", logoLabel: "o logotipo",
+            enterWatermarkText: "Informe o texto da marca-d'água.", emptyImage: "O servidor retornou uma imagem vazia.",
+            watermarkSuccess: "Marca-d'água aplicada. O download da imagem deve começar automaticamente.",
+            watermarkFailed: "Não foi possível processar a imagem. Tente novamente.",
+            watermarkRequestFailed: "Não foi possível processar a imagem ({status}): {message}",
+            httpError: "Erro HTTP {status}", requestFailed: "Não foi possível concluir a solicitação ({status}): {detail}",
+            invalidResponse: "O servidor retornou uma resposta vazia ou inválida.",
+            invalidContent: "A resposta do servidor não contém o conteúdo esperado.",
+            invalidAiContent: "A resposta da IA não contém título nem texto promocional.",
+            invalidHistory: "O servidor retornou um formato inesperado para o histórico.",
+            historyLoadingError: "Não foi possível carregar o histórico."
+        },
+        "en": {
+            pageTitle: "AdMuse — Creative promotion with AI", brandAria: "AdMuse, home", navAria: "Main navigation",
+            navFeatures: "Features", navGenerator: "Generator", navWatermark: "Watermark", navStart: "Get started",
+            heroEyebrow: "✦ Creativity powered by artificial intelligence", heroLead: "Your art deserves", heroAccent: "to be seen.",
+            heroCopy: "Create promotional copy for your art, products, and services. Prepare your promotions and customize your images in one place.",
+            heroCreate: "Create my promotion →", heroFeatures: "Explore features", heroNote: "Tools for artists and small creative businesses.",
+            previewAria: "Illustrative promotion preview", nextPost: "Your next post", illustrativePreview: "Illustrative preview",
+            previewTitleLabel: "Title", previewTitle: "Art made to tell stories", previewTextLabel: "Promotional text",
+            previewText: "Turn your ideas into unique illustrations and bring more personality to your spaces and projects.",
+            previewCtaLabel: "Call to action", previewCta: "Get in touch to learn more!",
+            featuresHeading: "More time to create. Easier promotion.",
+            featuresCopy: "Simple tools to help you showcase your work without starting every post from scratch.",
+            featureAiTitle: "AI copywriting", featureAiCopy: "Generate titles, promotional text, calls to action, and hashtags from the information you provide.",
+            featureWatermarkTitle: "Watermark", featureWatermarkCopy: "Add your contact details or logo to images and download the result for promotion.",
+            featureHistoryTitle: "History", featureHistoryCopy: "Browse saved promotions to find and reuse your content.",
+            workspaceHeading: "Let's create your promotion?", workspaceCopy: "Fill in the details below. The more context you provide, the more targeted the result can be.",
+            generatorTitle: "Content generator", requiredFields: "Fields marked with * are required.",
+            productLabel: "Product or service", productPlaceholder: "E.g., custom illustration", descriptionLabel: "Description",
+            descriptionPlaceholder: "Describe the product or service and what customers need to know.", max1000: "Up to 1,000 characters.",
+            audienceLabel: "Target audience", audiencePlaceholder: "E.g., people who enjoy original art", audienceHint: "Tell us who you want to reach.",
+            channelLabel: "Promotion channel", channelWhatsapp: "WhatsApp Status", channelOther: "Other",
+            styleLabel: "Writing style", styleProfessional: "Professional", styleCasual: "Casual", styleCreative: "Creative", styleElegant: "Elegant", styleFun: "Fun",
+            contentLanguageLabel: "Content language", languagePortuguese: "Portuguese (Brazil)", languageEnglish: "English", languageSpanish: "Spanish",
+            objectiveLabel: "Objective", objectivePromote: "Promote my work", objectiveCustomers: "Attract new customers", objectiveSales: "Generate sales",
+            objectiveEngagement: "Increase engagement", objectivePortfolio: "Showcase my portfolio",
+            priceLabel: "Price (optional)", pricePlaceholder: "E.g., Starting at R$ 50", priceHint: "Only included if you provide it.",
+            differentialsLabel: "Key differentiators (optional)", differentialsPlaceholder: "E.g., Made to order",
+            generate: "✦ Generate content", generating: "Generating content...", reset: "Clear form",
+            resultTitle: "Your generated content", copyAll: "Copy all", titleLabel: "Title", promotionalTextLabel: "Promotional text",
+            ctaLabel: "Call to action", hashtagsLabel: "Hashtags", saveHistory: "Save to history",
+            historyTitle: "Promotion history", refresh: "Refresh", historyLoading: "Loading history...",
+            watermarkTitle: "Add a watermark to images",
+            watermarkDescription: "Upload an image and choose between adding contact text or applying your logo.",
+            originalImage: "Original image", acceptedFormats: "Accepted formats: PNG or JPEG. Maximum 5 MB.",
+            watermarkTypeLabel: "Watermark type", watermarkTextType: "Contact text", watermarkLogoType: "Logo file",
+            watermarkTextLabel: "Watermark text", watermarkTextPlaceholder: "E.g., @myshop or +1 555 123 4567",
+            watermarkTextHint: "The text will be placed over the image.", logoFileLabel: "Logo file",
+            logoHint: "PNG with a transparent background is recommended. Maximum 5 MB.",
+            watermarkTip: "Your original image file will not be changed. The result will be downloaded separately as a PNG.",
+            applyWatermark: "Apply watermark", processingImage: "Processing image...",
+            footerTagline: "— your creativity in the spotlight.", footerDescription: "Made for artists and small creative businesses.",
+            languageSelectorAria: "Interface language",
+            errProduct: "Enter the product or service name.", errDescription: "Fill in the product or service description.",
+            errAudience: "Enter the target audience before generating content.", errRequired: "Check the channel, style, language, and objective fields.",
+            generatingStatus: "AI is preparing your promotion. Please wait...", generatedSuccess: "Content generated successfully!",
+            generateFailed: "Could not generate content. Please try again.", copyBefore: "Generate content before copying it.",
+            copied: "Content copied to the clipboard.", copyFailed: "Could not copy automatically. Select the text and copy it manually.",
+            saveBefore: "Generate content before saving it.", alreadySaved: "This content is already saved in history.",
+            missingId: "The server did not return a content identifier. Refresh the history to check.",
+            saved: "Content recorded in history.", saveFailed: "Could not save the promotion. Please try again.", dateUnavailable: "Date unavailable", untitled: "Untitled promotion",
+            historyTypeProduct: "Product/service", historyTypePromotion: "Promotion", view: "View",
+            loadedHistory: "Content loaded from history.", historyUnexpected: "The server returned an unexpected history format.",
+            historyEmpty: "No promotions found yet.", historyFailed: "Could not load history.",
+            selectImage: "Select {label}.", imageFormat: "{label} must be a PNG or JPEG file.",
+            imageSize: "{label} must be no larger than 5 MB.", originalImageLabel: "the original image", logoLabel: "the logo",
+            enterWatermarkText: "Enter the watermark text.", emptyImage: "The server returned an empty image.",
+            watermarkSuccess: "Watermark applied. The image download should start automatically.",
+            watermarkFailed: "Could not process the image. Please try again.",
+            watermarkRequestFailed: "Could not process the image ({status}): {message}",
+            httpError: "HTTP error {status}", requestFailed: "Could not complete the request ({status}): {detail}",
+            invalidResponse: "The server returned an empty or invalid response.", invalidContent: "The server response does not contain the expected content.",
+            invalidAiContent: "The AI response contains neither a title nor promotional text.",
+            invalidHistory: "The server returned an unexpected history format.", historyLoadingError: "Could not load history."
+        },
+        "es": {
+            pageTitle: "AdMuse — Promoción creativa con IA", brandAria: "AdMuse, inicio", navAria: "Navegación principal",
+            navFeatures: "Funciones", navGenerator: "Generador", navWatermark: "Marca de agua", navStart: "Comenzar",
+            heroEyebrow: "✦ Creatividad con inteligencia artificial", heroLead: "Tu arte merece", heroAccent: "ser visto.",
+            heroCopy: "Crea textos promocionales para tu arte, productos y servicios. Prepara tus publicaciones y personaliza tus imágenes en un solo lugar.",
+            heroCreate: "Crear mi promoción →", heroFeatures: "Conocer funciones", heroNote: "Herramientas para artistas y pequeños negocios creativos.",
+            previewAria: "Ejemplo ilustrativo de promoción", nextPost: "Tu próxima publicación", illustrativePreview: "Vista previa ilustrativa",
+            previewTitleLabel: "Título", previewTitle: "Arte creado para contar historias", previewTextLabel: "Texto promocional",
+            previewText: "Convierte tus ideas en ilustraciones únicas y aporta más personalidad a tus espacios y proyectos.",
+            previewCtaLabel: "Llamada a la acción", previewCta: "¡Ponte en contacto para saber más!",
+            featuresHeading: "Más tiempo para crear. Más facilidad para promocionar.",
+            featuresCopy: "Herramientas sencillas para presentar tu trabajo sin tener que empezar cada publicación desde cero.",
+            featureAiTitle: "Texto con IA", featureAiCopy: "Genera títulos, textos promocionales, llamadas a la acción y hashtags a partir de la información que proporciones.",
+            featureWatermarkTitle: "Marca de agua", featureWatermarkCopy: "Añade tu contacto o logotipo a las imágenes y descarga el resultado para promocionarlo.",
+            featureHistoryTitle: "Historial", featureHistoryCopy: "Consulta las promociones guardadas para encontrar y reutilizar tu contenido.",
+            workspaceHeading: "¿Creamos tu promoción?", workspaceCopy: "Completa la información. Cuanto más contexto proporciones, más específico podrá ser el resultado.",
+            generatorTitle: "Generador de contenido", requiredFields: "Los campos marcados con * son obligatorios.",
+            productLabel: "Producto o servicio", productPlaceholder: "Ej.: Ilustración personalizada", descriptionLabel: "Descripción",
+            descriptionPlaceholder: "Describe el producto o servicio y lo que el cliente necesita saber.", max1000: "Hasta 1.000 caracteres.",
+            audienceLabel: "Público objetivo", audiencePlaceholder: "Ej.: Personas a las que les gusta el arte original", audienceHint: "Indica a quién quieres llegar.",
+            channelLabel: "Canal de promoción", channelWhatsapp: "Estado de WhatsApp", channelOther: "Otro",
+            styleLabel: "Estilo del texto", styleProfessional: "Profesional", styleCasual: "Informal", styleCreative: "Creativo", styleElegant: "Elegante", styleFun: "Divertido",
+            contentLanguageLabel: "Idioma del contenido", languagePortuguese: "Portugués (Brasil)", languageEnglish: "Inglés", languageSpanish: "Español",
+            objectiveLabel: "Objetivo", objectivePromote: "Promocionar mi trabajo", objectiveCustomers: "Atraer nuevos clientes", objectiveSales: "Generar ventas",
+            objectiveEngagement: "Aumentar la interacción", objectivePortfolio: "Presentar mi portafolio",
+            priceLabel: "Precio (opcional)", pricePlaceholder: "Ej.: Desde R$ 50", priceHint: "Solo se incluirá si lo proporcionas.",
+            differentialsLabel: "Diferenciales (opcional)", differentialsPlaceholder: "Ej.: Hecho por encargo",
+            generate: "✦ Generar contenido", generating: "Generando contenido...", reset: "Limpiar formulario",
+            resultTitle: "Tu contenido generado", copyAll: "Copiar todo", titleLabel: "Título", promotionalTextLabel: "Texto promocional",
+            ctaLabel: "Llamada a la acción", hashtagsLabel: "Hashtags", saveHistory: "Guardar en el historial",
+            historyTitle: "Historial de promociones", refresh: "Actualizar", historyLoading: "Cargando historial...",
+            watermarkTitle: "Marca de agua en imágenes",
+            watermarkDescription: "Sube una imagen y elige entre añadir un texto de contacto o aplicar tu logotipo.",
+            originalImage: "Imagen original", acceptedFormats: "Formatos aceptados: PNG o JPEG. Máximo 5 MB.",
+            watermarkTypeLabel: "Tipo de marca de agua", watermarkTextType: "Texto de contacto", watermarkLogoType: "Archivo de logotipo",
+            watermarkTextLabel: "Texto de la marca de agua", watermarkTextPlaceholder: "Ej.: @mitienda o +34 600 123 456",
+            watermarkTextHint: "El texto se aplicará sobre la imagen.", logoFileLabel: "Archivo del logotipo",
+            logoHint: "Se recomienda PNG con fondo transparente. Máximo 5 MB.",
+            watermarkTip: "El archivo original no se modificará. El resultado se descargará por separado en formato PNG.",
+            applyWatermark: "Aplicar marca de agua", processingImage: "Procesando imagen...",
+            footerTagline: "— tu creatividad en primer plano.", footerDescription: "Hecho para artistas y pequeños negocios creativos.",
+            languageSelectorAria: "Idioma de la interfaz",
+            errProduct: "Introduce el nombre del producto o servicio.", errDescription: "Completa la descripción del producto o servicio.",
+            errAudience: "Indica el público objetivo antes de generar el contenido.", errRequired: "Revisa los campos de canal, estilo, idioma y objetivo.",
+            generatingStatus: "La IA está preparando tu promoción. Espera...", generatedSuccess: "¡Contenido generado correctamente!",
+            generateFailed: "No se pudo generar el contenido. Inténtalo de nuevo.", copyBefore: "Genera contenido antes de copiarlo.",
+            copied: "Contenido copiado al portapapeles.", copyFailed: "No se pudo copiar automáticamente. Selecciona el texto y cópialo manualmente.",
+            saveBefore: "Genera contenido antes de guardarlo.", alreadySaved: "Este contenido ya está guardado en el historial.",
+            missingId: "El servidor no devolvió el identificador del contenido. Actualiza el historial para comprobarlo.",
+            saved: "Contenido registrado en el historial.", saveFailed: "No se pudo guardar la promoción. Inténtalo de nuevo.", dateUnavailable: "Fecha no disponible", untitled: "Promoción sin título",
+            historyTypeProduct: "Producto/servicio", historyTypePromotion: "Promoción", view: "Ver",
+            loadedHistory: "Contenido cargado desde el historial.", historyUnexpected: "El servidor devolvió un formato inesperado para el historial.",
+            historyEmpty: "Todavía no se encontraron promociones.", historyFailed: "No se pudo cargar el historial.",
+            selectImage: "Selecciona {label}.", imageFormat: "{label} debe estar en formato PNG o JPEG.",
+            imageSize: "{label} debe tener un máximo de 5 MB.", originalImageLabel: "la imagen original", logoLabel: "el logotipo",
+            enterWatermarkText: "Introduce el texto de la marca de agua.", emptyImage: "El servidor devolvió una imagen vacía.",
+            watermarkSuccess: "Marca de agua aplicada. La descarga de la imagen debería comenzar automáticamente.",
+            watermarkFailed: "No se pudo procesar la imagen. Inténtalo de nuevo.",
+            watermarkRequestFailed: "No se pudo procesar la imagen ({status}): {message}",
+            httpError: "Error HTTP {status}", requestFailed: "No se pudo completar la solicitud ({status}): {detail}",
+            invalidResponse: "El servidor devolvió una respuesta vacía o no válida.", invalidContent: "La respuesta del servidor no contiene el contenido esperado.",
+            invalidAiContent: "La respuesta de la IA no contiene título ni texto promocional.",
+            invalidHistory: "El servidor devolvió un formato inesperado para el historial.", historyLoadingError: "No se pudo cargar el historial."
+        }
+    };
+
+    let uiLanguage = getInitialUiLanguage();
+
+    function getInitialUiLanguage() {
+        try {
+            const savedLanguage = localStorage.getItem(UI_LANGUAGE_STORAGE_KEY);
+            return supportedUiLanguages.includes(savedLanguage) ? savedLanguage : "pt-BR";
+        } catch {
+            return "pt-BR";
+        }
+    }
+
+    function t(key, values = {}) {
+        const dictionary = translations[uiLanguage] || translations["pt-BR"];
+        let message = dictionary[key] ?? translations["pt-BR"][key] ?? key;
+        Object.entries(values).forEach(([name, value]) => {
+            message = message.replaceAll(`{${name}}`, String(value));
+        });
+        return message;
+    }
+
+    function setTextPreservingRequiredMark(element, value) {
+        const requiredMark = element.querySelector(".required-mark");
+        if (requiredMark) {
+            element.textContent = `${value} `;
+            element.appendChild(requiredMark);
+        } else {
+            element.textContent = value;
+        }
+    }
+
+    function applyUiLanguage() {
+        document.documentElement.lang = uiLanguage;
+        document.title = t("pageTitle");
+        uiLanguageSelect.value = uiLanguage;
+        uiLanguageSelect.setAttribute("aria-label", t("languageSelectorAria"));
+
+        const heroHeading = document.querySelector(".hero h1");
+        if (heroHeading) {
+            heroHeading.innerHTML = `${t("heroLead")} <span>${t("heroAccent")}</span>`;
+        }
+        const heroCardLabels = document.querySelectorAll(".hero-card .preview-label");
+        ["previewTitleLabel", "previewTextLabel", "previewCtaLabel"].forEach((key, index) => {
+            if (heroCardLabels[index]) heroCardLabels[index].textContent = t(key);
+        });
+
+        const textMap = {
+            ".brand": ["brandAria", "aria-label"],
+            ".nav-links": ["navAria", "aria-label"],
+            ".nav-links a[href='#recursos']": ["navFeatures"],
+            ".nav-links a[href='#gerador']": ["navGenerator"],
+            ".nav-links a[href='#marca-dagua']": ["navWatermark"],
+            ".nav-links a.button": ["navStart"],
+            ".eyebrow": ["heroEyebrow"],
+            ".hero-copy": ["heroCopy"],
+            ".hero-actions a[href='#gerador']": ["heroCreate"],
+            ".hero-actions a[href='#recursos']": ["heroFeatures"],
+            ".hero-note": ["heroNote"],
+            ".hero-card": ["previewAria", "aria-label"],
+            ".hero-card-top strong": ["nextPost"],
+            ".status-pill": ["illustrativePreview"],
+            ".hero-card .preview-title": ["previewTitle"],
+            ".hero-card .preview-text:nth-of-type(1)": ["previewText"],
+            ".hero-card .preview-text:nth-of-type(2)": ["previewCta"],
+            "#recursos .section-heading h2": ["featuresHeading"],
+            "#recursos .section-heading p": ["featuresCopy"],
+            ".feature-card:nth-child(1) h3": ["featureAiTitle"],
+            ".feature-card:nth-child(1) p": ["featureAiCopy"],
+            ".feature-card:nth-child(2) h3": ["featureWatermarkTitle"],
+            ".feature-card:nth-child(2) p": ["featureWatermarkCopy"],
+            ".feature-card:nth-child(3) h3": ["featureHistoryTitle"],
+            ".feature-card:nth-child(3) p": ["featureHistoryCopy"],
+            "#gerador .section-heading h2": ["workspaceHeading"],
+            "#gerador .section-heading p": ["workspaceCopy"],
+            ".panel h3": ["generatorTitle", "first"],
+            "#promotionForm + .result-panel .result-heading h4": ["resultTitle"],
+            "#promotionForm + .result-panel .result-heading button": ["copyAll"],
+            "#promotionForm + .result-panel .result-section:nth-of-type(1) h5": ["titleLabel"],
+            "#promotionForm + .result-panel .result-section:nth-of-type(2) h5": ["promotionalTextLabel"],
+            "#ctaSection h5": ["ctaLabel"],
+            "#hashtagsSection h5": ["hashtagsLabel"],
+            "#saveButton": ["saveHistory"],
+            ".history-header h4": ["historyTitle"],
+            "#refreshHistoryButton": ["refresh"],
+            "#marca-dagua h3": ["watermarkTitle"],
+            "#marca-dagua .panel-description": ["watermarkDescription"],
+            ".watermark-tip": ["watermarkTip"],
+            "#watermarkButton": ["applyWatermark"],
+            ".footer-inner p:first-child": ["footerTagline", "suffix"],
+            ".footer-inner p:last-child": ["footerDescription"]
+        };
+
+        Object.entries(textMap).forEach(([selector, config]) => {
+            const element = document.querySelector(selector);
+            if (!element) return;
+            const [key, mode] = config;
+            if (mode === "aria-label") {
+                element.setAttribute("aria-label", t(key));
+            } else if (mode === "suffix") {
+                element.innerHTML = `<strong>AdMuse</strong> ${t(key)}`;
+            } else if (mode === "first") {
+                if (element.closest("#marca-dagua")) element.textContent = t("watermarkTitle");
+                else element.textContent = t(key);
+            } else if (selector === ".hero-card") {
+                element.setAttribute("aria-label", t(key));
+            } else {
+                setTextPreservingRequiredMark(element, t(key));
+            }
+        });
+
+        const directText = [
+            ["#productOrService", "productPlaceholder", "placeholder"],
+            ["#description", "descriptionPlaceholder", "placeholder"],
+            ["#targetAudience", "audiencePlaceholder", "placeholder"],
+            ["#price", "pricePlaceholder", "placeholder"],
+            ["#differentials", "differentialsPlaceholder", "placeholder"],
+            ["#watermarkText", "watermarkTextPlaceholder", "placeholder"]
+        ];
+        directText.forEach(([selector, key, attribute]) => {
+            document.querySelector(selector)?.setAttribute(attribute, t(key));
+        });
+
+        const labelMap = {
+            'label[for="productOrService"]': "productLabel",
+            'label[for="description"]': "descriptionLabel",
+            'label[for="targetAudience"]': "audienceLabel",
+            'label[for="channel"]': "channelLabel",
+            'label[for="style"]': "styleLabel",
+            'label[for="language"]': "contentLanguageLabel",
+            'label[for="objective"]': "objectiveLabel",
+            'label[for="price"]': "priceLabel",
+            'label[for="differentials"]': "differentialsLabel",
+            'label[for="watermarkImage"]': "originalImage",
+            'label[for="watermarkType"]': "watermarkTypeLabel",
+            'label[for="watermarkText"]': "watermarkTextLabel",
+            'label[for="watermarkLogo"]': "logoFileLabel"
+        };
+        Object.entries(labelMap).forEach(([selector, key]) => {
+            const element = document.querySelector(selector);
+            if (element) setTextPreservingRequiredMark(element, t(key));
+        });
+
+        const optionMap = {
+            '#channel option[value="WhatsApp Status"]': "channelWhatsapp",
+            '#channel option[value="Outro"]': "channelOther",
+            '#style option[value="professional"]': "styleProfessional",
+            '#style option[value="descontraído"]': "styleCasual",
+            '#style option[value="criativo"]': "styleCreative",
+            '#style option[value="elegante"]': "styleElegant",
+            '#style option[value="divertido"]': "styleFun",
+            '#language option[value="pt-BR"]': "languagePortuguese",
+            '#language option[value="English"]': "languageEnglish",
+            '#language option[value="Spanish"]': "languageSpanish",
+            '#objective option:nth-child(1)': "objectivePromote",
+            '#objective option:nth-child(2)': "objectiveCustomers",
+            '#objective option:nth-child(3)': "objectiveSales",
+            '#objective option:nth-child(4)': "objectiveEngagement",
+            '#objective option:nth-child(5)': "objectivePortfolio",
+            '#watermarkType option[value="TEXT"]': "watermarkTextType",
+            '#watermarkType option[value="LOGO"]': "watermarkLogoType"
+        };
+        Object.entries(optionMap).forEach(([selector, key]) => {
+            const element = document.querySelector(selector);
+            if (element) element.textContent = t(key);
+        });
+
+        const smallMap = {
+            '#description + small': "max1000",
+            '#targetAudience + small': "audienceHint",
+            '#price + small': "priceHint",
+            '#watermarkImage + small': "acceptedFormats",
+            '#watermarkText + small': "watermarkTextHint",
+            '#watermarkLogo + small': "logoHint"
+        };
+        Object.entries(smallMap).forEach(([selector, key]) => {
+            const element = document.querySelector(selector);
+            if (element) element.textContent = t(key);
+        });
+
+        const formActions = document.querySelectorAll("#promotionForm .form-actions button");
+        if (formActions[0]) formActions[0].textContent = generateButton.disabled ? t("generating") : t("generate");
+        if (formActions[1]) formActions[1].textContent = t("reset");
+        const requiredDescription = document.querySelector("#promotionForm .panel-description");
+        if (requiredDescription) requiredDescription.textContent = t("requiredFields");
+
+        if (watermarkButton && watermarkButton.disabled) watermarkButton.textContent = t("processingImage");
+
+        const resultPanel = document.getElementById("resultPanel");
+        if (resultPanel) {
+            const resultHeading = resultPanel.querySelector(".result-heading h4");
+            if (resultHeading) resultHeading.textContent = t("resultTitle");
+            const resultLabels = resultPanel.querySelectorAll(".result-section h5");
+            if (resultLabels[0]) resultLabels[0].textContent = t("titleLabel");
+            if (resultLabels[1]) resultLabels[1].textContent = t("promotionalTextLabel");
+            if (resultLabels[2]) resultLabels[2].textContent = t("ctaLabel");
+            if (resultLabels[3]) resultLabels[3].textContent = t("hashtagsLabel");
+        }
+
+        const watermarkPanelDescription = document.querySelector("#marca-dagua .panel-description");
+        if (watermarkPanelDescription) watermarkPanelDescription.textContent = t("watermarkDescription");
+        const logoHint = document.querySelector('#watermarkLogo + small');
+        if (logoHint) logoHint.textContent = t("logoHint");
+
+        // Re-render only interface-owned labels. The selected AI output language is independent.
+        renderHistoryLanguage();
+    }
+
+    function renderHistoryLanguage() {
+        if (!historyList) return;
+        const loading = historyList.querySelector(".history-empty");
+        if (loading && loading.dataset.historyState === "loading") {
+            loading.textContent = t("historyLoading");
+        } else if (loading && loading.dataset.historyState === "empty") {
+            loading.textContent = t("historyEmpty");
+        } else if (loading && loading.dataset.historyState === "error") {
+            loading.textContent = t("historyFailed");
+        } else {
+            historyList.querySelectorAll(".history-item").forEach((item) => {
+                const meta = item.querySelector(".history-meta");
+                if (meta && meta.dataset.historyType) {
+                    meta.dataset.historyTypeLabel = meta.dataset.historyType === "product"
+                        ? t("historyTypeProduct") : t("historyTypePromotion");
+                }
+            });
+            historyList.querySelectorAll(".history-item").forEach((item) => {
+                const meta = item.querySelector(".history-meta");
+                if (meta && "createdAt" in meta.dataset) {
+                    meta.textContent = `${meta.dataset.historyTypeLabel || t("historyTypePromotion")} · ${formatDate(meta.dataset.createdAt)}`;
+                }
+                const button = item.querySelector("button");
+                if (button) button.textContent = t("view");
+            });
+        }
+    }
+
+    function changeUiLanguage(language) {
+        if (!supportedUiLanguages.includes(language)) return;
+        uiLanguage = language;
+        try {
+            localStorage.setItem(UI_LANGUAGE_STORAGE_KEY, uiLanguage);
+        } catch (error) {
+            console.warn("Could not save interface language preference:", error);
+        }
+        applyUiLanguage();
+    }
+
+    uiLanguageSelect.addEventListener("change", () => changeUiLanguage(uiLanguageSelect.value));
+
+    const promotionForm = document.getElementById("promotionForm");
+    const generateButton = document.getElementById("generateButton");
+    const promotionStatus = document.getElementById("promotionStatus");
+    const resultPanel = document.getElementById("resultPanel");
+    const copyButton = document.getElementById("copyButton");
+    const saveButton = document.getElementById("saveButton");
+    const saveStatus = document.getElementById("saveStatus");
+    const historyList = document.getElementById("historyList");
+    const historyStatus = document.getElementById("historyStatus");
+
+    const resultTitle = document.getElementById("resultTitle");
+    const resultText = document.getElementById("resultText");
+    const resultCta = document.getElementById("resultCta");
+    const resultHashtags = document.getElementById("resultHashtags");
+    const ctaSection = document.getElementById("ctaSection");
+    const hashtagsSection = document.getElementById("hashtagsSection");
+
+    let currentPromotion = null;
+    let lastPromotionInput = null;
+    let savedPromotionId = null;
+
+    function setStatus(element, message, type = "info") {
+        element.textContent = message;
+        element.className = message ? `form-status status-${type}` : "form-status";
+    }
+
+    function readTrimmedValue(formData, fieldName) {
+        const value = formData.get(fieldName);
+        return typeof value === "string" ? value.trim() : "";
+    }
+
+    function buildPromotionPayload() {
+        const data = new FormData(promotionForm);
+
+        const productOrService = readTrimmedValue(data, "productOrService");
+        const description = readTrimmedValue(data, "description");
+        const targetAudience = readTrimmedValue(data, "targetAudience");
+        const channel = readTrimmedValue(data, "channel");
+        const style = readTrimmedValue(data, "style");
+        const language = readTrimmedValue(data, "language");
+        const objective = readTrimmedValue(data, "objective");
+        const price = readTrimmedValue(data, "price");
+        const differentials = readTrimmedValue(data, "differentials");
+
+        if (!productOrService) {
+            throw new Error(t("errProduct"));
+        }
+
+        if (!description) {
+            throw new Error(t("errDescription"));
+        }
+
+        if (!targetAudience) {
+            throw new Error(t("errAudience"));
+        }
+
+        if (!channel || !style || !language || !objective) {
+            throw new Error(t("errRequired"));
+        }
+
+        const details = [
+            `Descrição informada: ${description}`,
+            price ? `Preço informado: ${price}` : "",
+            differentials ? `Diferenciais informados: ${differentials}` : ""
+        ].filter(Boolean).join("\n");
+
+        /*
+         * O contrato atual de PromotionInput possui seis campos.
+         * As informações adicionais são anexadas ao campo do produto,
+         * evitando enviar propriedades que o contrato atual não conhece.
+         */
+        return {
+            productOrService: `${productOrService}\n\n${details}`.trim(),
+            targetAudience,
+            channel,
+            style,
+            language,
+            objective
+        };
+    }
+
+    async function readResponse(response) {
+        const bodyText = await response.text();
+
+        let body = null;
+        if (bodyText) {
+            try {
+                body = JSON.parse(bodyText);
+            } catch {
+                body = null;
+            }
+        }
+
+        if (!response.ok) {
+            const detail = body?.detail
+                || body?.message
+                || body?.error
+                || bodyText
+                || t("httpError", { status: response.status });
+
+            throw new Error(t("requestFailed", { status: response.status, detail }));
+        }
+
+        if (body === null) {
+            throw new Error(t("invalidResponse"));
+        }
+
+        return body;
+    }
+
+    function extractPromotionContent(responseBody) {
+        const content = responseBody?.promotionContent ?? responseBody;
+
+        if (!content || typeof content !== "object") {
+            throw new Error(t("invalidContent"));
+        }
+
+        if (!content.title && !content.promotionalText) {
+            throw new Error(t("invalidAiContent"));
+        }
+
+        return content;
+    }
+
+    function displayPromotion(responseBody) {
+        const content = extractPromotionContent(responseBody);
+
+        currentPromotion = responseBody;
+        savedPromotionId = null;
+
+        resultTitle.textContent = content.title || "";
+        resultText.textContent = content.promotionalText || "";
+        resultCta.textContent = content.callToAction || "";
+
+        ctaSection.hidden = !content.callToAction;
+
+        resultHashtags.replaceChildren();
+        const hashtags = Array.isArray(content.hashtags) ? content.hashtags : [];
+
+        hashtags.forEach((hashtag) => {
+            const tag = document.createElement("span");
+            tag.className = "tag";
+            tag.textContent = hashtag;
+            resultHashtags.appendChild(tag);
+        });
+
+        hashtagsSection.hidden = hashtags.length === 0;
+        resultPanel.hidden = false;
+        setStatus(saveStatus, "");
+    }
+
+    promotionForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        if (!promotionForm.reportValidity()) {
+            return;
+        }
+
+        let payload;
+        try {
+            payload = buildPromotionPayload();
+        } catch (error) {
+            setStatus(promotionStatus, error.message, "error");
+            return;
+        }
+
+        lastPromotionInput = payload;
+        generateButton.disabled = true;
+        generateButton.textContent = t("generating");
+        setStatus(promotionStatus, t("generatingStatus"), "info");
+
+        try {
+            const response = await fetch("/api/promotions/generate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const responseBody = await readResponse(response);
+            displayPromotion(responseBody);
+
+            setStatus(promotionStatus, t("generatedSuccess"), "success");
+            resultPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        } catch (error) {
+            console.error("Erro ao gerar conteúdo:", error);
+            setStatus(
+                promotionStatus,
+                error.message || t("generateFailed"),
+                "error"
+            );
+        } finally {
+            generateButton.disabled = false;
+            generateButton.textContent = t("generate");
+        }
+    });
+
+    copyButton.addEventListener("click", async () => {
+        if (!currentPromotion) {
+            setStatus(saveStatus, t("copyBefore"), "error");
+            return;
+        }
+
+        const content = currentPromotion.promotionContent ?? currentPromotion;
+        const hashtags = Array.isArray(content.hashtags) ? content.hashtags.join(" ") : "";
+
+        const formattedText = [
+            content.title || "",
+            content.promotionalText || "",
+            content.callToAction || "",
+            hashtags
+        ].filter(Boolean).join("\n\n");
+
+        try {
+            await navigator.clipboard.writeText(formattedText);
+            setStatus(saveStatus, t("copied"), "success");
+        } catch (error) {
+            console.error("Erro ao copiar:", error);
+            setStatus(
+                saveStatus,
+                t("copyFailed"),
+                "error"
+            );
+        }
+    });
+
+    saveButton.addEventListener("click", async () => {
+        if (!currentPromotion) {
+            setStatus(saveStatus, t("saveBefore"), "error");
+            return;
+        }
+
+        if (savedPromotionId) {
+            setStatus(saveStatus, t("alreadySaved"), "info");
+            return;
+        }
+
+        saveButton.disabled = true;
+        setStatus(saveStatus, "");
+
+        try {
+            const response = await fetch("/api/promotions", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(currentPromotion)
+            });
+
+            const savedPromotion = await readResponse(response);
+            if (!savedPromotion.id) {
+                throw new Error(t("missingId"));
+            }
+
+            currentPromotion = savedPromotion;
+            savedPromotionId = savedPromotion.id;
+            setStatus(saveStatus, t("saved"), "success");
+            await loadHistory();
+        } catch (error) {
+            console.error("Erro ao salvar promoção:", error);
+            setStatus(saveStatus, error.message || t("saveFailed"), "error");
+        } finally {
+            saveButton.disabled = false;
+        }
+    });
+
+    function formatDate(value) {
+        if (!value) {
+            return t("dateUnavailable");
+        }
+
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) {
+            return t("dateUnavailable");
+        }
+
+        return new Intl.DateTimeFormat(uiLanguage === "en" ? "en-US" : uiLanguage === "es" ? "es-ES" : "pt-BR", {
+            dateStyle: "short",
+            timeStyle: "short"
+        }).format(date);
+    }
+
+    function createHistoryItem(request) {
+        const input = request?.promotionInput ?? {};
+        const content = request?.promotionContent ?? request ?? {};
+
+        const item = document.createElement("article");
+        item.className = "history-item";
+
+        const info = document.createElement("div");
+        const title = document.createElement("strong");
+        title.textContent = input.productOrService || content.title || t("untitled");
+
+        const meta = document.createElement("div");
+        meta.className = "history-meta";
+
+        const type = input.productOrService ? "product" : "promotion";
+        meta.dataset.historyType = type;
+        meta.dataset.createdAt = request.createdAt || "";
+        meta.dataset.historyTypeLabel = type === "product" ? t("historyTypeProduct") : t("historyTypePromotion");
+        meta.textContent = `${meta.dataset.historyTypeLabel} · ${formatDate(request.createdAt)}`;
+
+        info.append(title, meta);
+
+        const viewButton = document.createElement("button");
+        viewButton.type = "button";
+        viewButton.className = "button button-outline button-small";
+        viewButton.textContent = t("view");
+        viewButton.addEventListener("click", () => {
+            try {
+                displayPromotion(request);
+                setStatus(promotionStatus, t("loadedHistory"), "success");
+                resultPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            } catch (error) {
+                setStatus(historyStatus, error.message, "error");
+            }
+        });
+
+        item.append(info, viewButton);
+        return item;
+    }
+
+    async function loadHistory() {
+        historyList.replaceChildren();
+        const loading = document.createElement("div");
+        loading.className = "history-empty";
+        loading.textContent = t("historyLoading");
+        loading.dataset.historyState = "loading";
+        historyList.appendChild(loading);
+        setStatus(historyStatus, "");
+
+        try {
+            const response = await fetch("/api/promotions", {
+                headers: { "Accept": "application/json" }
+            });
+
+            const data = await readResponse(response);
+            if (!Array.isArray(data)) {
+                throw new Error(t("historyUnexpected"));
+            }
+
+            data.sort((a, b) => {
+                return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+            });
+
+            historyList.replaceChildren();
+
+            if (data.length === 0) {
+                const empty = document.createElement("div");
+                empty.className = "history-empty";
+                empty.textContent = t("historyEmpty");
+                empty.dataset.historyState = "empty";
+                historyList.appendChild(empty);
+                return;
+            }
+
+            data.forEach((request) => {
+                historyList.appendChild(createHistoryItem(request));
+            });
+        } catch (error) {
+            console.error("Erro ao carregar histórico:", error);
+            historyList.replaceChildren();
+
+            const empty = document.createElement("div");
+            empty.className = "history-empty";
+            empty.textContent = t("historyFailed");
+            empty.dataset.historyState = "error";
+            historyList.appendChild(empty);
+
+            setStatus(historyStatus, error.message, "error");
+        }
+    }
+
+    document.getElementById("refreshHistoryButton")
+        .addEventListener("click", loadHistory);
+
+    promotionForm.addEventListener("reset", () => {
+        setStatus(promotionStatus, "");
+        setStatus(saveStatus, "");
+        queueMicrotask(() => applyUiLanguage());
+    });
+
+    const watermarkForm = document.getElementById("watermarkForm");
+    const watermarkType = document.getElementById("watermarkType");
+    const watermarkImage = document.getElementById("watermarkImage");
+    const watermarkText = document.getElementById("watermarkText");
+    const watermarkLogo = document.getElementById("watermarkLogo");
+    const textWatermarkFields = document.getElementById("textWatermarkFields");
+    const logoWatermarkFields = document.getElementById("logoWatermarkFields");
+    const watermarkButton = document.getElementById("watermarkButton");
+    const watermarkStatus = document.getElementById("watermarkStatus");
+
+    function updateWatermarkFields() {
+        const useText = watermarkType.value === "TEXT";
+
+        textWatermarkFields.hidden = !useText;
+        logoWatermarkFields.hidden = useText;
+
+        watermarkText.required = useText;
+        watermarkLogo.required = !useText;
+
+        watermarkText.disabled = !useText;
+        watermarkLogo.disabled = useText;
+    }
+
+    watermarkType.addEventListener("change", updateWatermarkFields);
+    updateWatermarkFields();
+
+    function validateImageFile(file, label) {
+        if (!file) {
+            throw new Error(t("selectImage", { label }));
+        }
+
+        const acceptedTypes = ["image/png", "image/jpeg"];
+        if (!acceptedTypes.includes(file.type)) {
+            throw new Error(t("imageFormat", { label }));
+        }
+
+        const maxSize = 5 * 1024 * 1024;
+        if (file.size > maxSize) {
+            throw new Error(t("imageSize", { label }));
+        }
+    }
+
+    watermarkForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        setStatus(watermarkStatus, "");
+
+        try {
+            validateImageFile(watermarkImage.files[0], t("originalImageLabel"));
+
+            if (watermarkType.value === "TEXT") {
+                if (!watermarkText.value.trim()) {
+                    throw new Error(t("enterWatermarkText"));
+                }
+            } else {
+                validateImageFile(watermarkLogo.files[0], t("logoLabel"));
+            }
+        } catch (error) {
+            setStatus(watermarkStatus, error.message, "error");
+            return;
+        }
+
+        watermarkButton.disabled = true;
+        watermarkButton.textContent = t("processingImage");
+
+        try {
+            const formData = new FormData(watermarkForm);
+
+            const response = await fetch("/api/watermarks", {
+                method: "POST",
+                body: formData
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                let message = errorText || t("httpError", { status: response.status });
+
+                try {
+                    const errorJson = JSON.parse(errorText);
+                    message = errorJson.detail || errorJson.message || errorJson.error || message;
+                } catch {
+                    // Mantém a mensagem original caso a resposta não seja JSON.
+                }
+
+                throw new Error(t("watermarkRequestFailed", { status: response.status, message }));
+            }
+
+            const blob = await response.blob();
+            if (!blob.size) {
+                throw new Error(t("emptyImage"));
+            }
+
+            const downloadUrl = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = downloadUrl;
+            link.download = "watermarked.png";
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+
+            setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+            setStatus(
+                watermarkStatus,
+                t("watermarkSuccess"),
+                "success"
+            );
+        } catch (error) {
+            console.error("Erro ao aplicar marca-d'água:", error);
+            setStatus(
+                watermarkStatus,
+                error.message || t("watermarkFailed"),
+                "error"
+            );
+        } finally {
+            watermarkButton.disabled = false;
+            watermarkButton.textContent = t("applyWatermark");
+        }
+    });
+
+    applyUiLanguage();
+    loadHistory();
+</script>
+</body>
+</html>
